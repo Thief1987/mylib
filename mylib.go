@@ -42,12 +42,12 @@ func ReadUint64BE(r io.Reader) uint64 {
 	return binary.BigEndian.Uint64(buf.Bytes())
 }
 
-func Padding(d *bytes.Buffer, base uint32) uint32 {
-	len := d.Len()
+func Padding(data *bytes.Buffer, base uint32, padding_value uint8) uint32 {
+	len := data.Len()
 	p := base - (uint32(len) % base)
 	if p != base {
 		for i := 0; i < int(p); i++ {
-			binary.Write(d, binary.LittleEndian, uint8(0))
+			binary.Write(data, binary.LittleEndian, padding_value)
 		}
 	} else {
 		p = 0
